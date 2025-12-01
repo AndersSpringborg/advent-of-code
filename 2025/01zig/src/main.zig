@@ -1,4 +1,5 @@
 const std = @import("std");
+const scanner = @import("scanner.zig");
 
 const Direction = enum {
     Right,
@@ -70,49 +71,53 @@ const Dial0x434C49434B = struct {
     }
 };
 
-fn processInput(allocator: std.mem.Allocator, filename: []const u8, comptime DialType: type, initial_index: anytype) !DialType {
-    const file = try std.fs.cwd().openFile(filename, .{});
-    defer file.close();
-
-    const stat = try file.stat();
-    const content = try allocator.alloc(u8, stat.size);
-    defer allocator.free(content);
-
-    const bytes_read = try file.read(content);
-    const file_content = content[0..bytes_read];
-
-    var dial = DialType.init(initial_index);
-    var lines = std.mem.splitScalar(u8, file_content, '\n');
-
-    while (lines.next()) |line| {
-        if (line.len == 0) continue;
-
-        std.debug.print("current Dial: {d}\n", .{dial.index});
-        std.debug.print("Line is: {s}\n", .{line});
-
-        const rotation_symbol = line[0];
-        const steps_str = line[1..];
-        const steps = try std.fmt.parseInt(@TypeOf(dial.index), steps_str, 10);
-
-        const direction: Direction = if (rotation_symbol == 'R') .Right else .Left;
-        dial.rotate(direction, steps);
-    }
-
-    return dial;
-}
-
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    // Process first input with Dial
-    const dial = try processInput(allocator, "input.txt", Dial, @as(usize, 50));
+    var scan_result = try scanner.scan(allocator, "input.txt");
+    defer scan_result.close(allocator);
 
-    // Process second input with Dial0x434C49434B
-    const dial2 = try processInput(allocator, "input2.txt", Dial0x434C49434B, @as(i32, 50));
+    var dial = Dial.init(50);
+    while (scan_result.scanner.scan()) {
+        const line = scan_result.scanner.text();
+        std.debug.print("current Dial: {d}\n", .{dial.index});
+        std.debug.print("Line is: {s}\n", .{line});
+
+        const rotation_symbol = line[0];
+        const steps_str = line[1..];
+        const steps_number = try std.fmt.parseInt(usize, steps_str, 10);
+
+        if (rotation_symbol == 'R') {
+            dial.rotate(Direction.Right, steps_number);
+        } else if (rotation_symbol == 'L') {
+            dial.rotate(Direction.Left, steps_number);
+        }
+    }
+
+    var scan_result2 = try scanner.scan(allocator, "input2.txt");
+    defer scan_result2.close(allocator);
+
+    var dial_method = Dial0x434C49434B.init(50);
+    while (scan_result2.scanner.scan()) {
+        const line = scan_result2.scanner.text();
+        std.debug.print("current Dial: {d}\n", .{dial_method.index});
+        std.debug.print("Line is: {s}\n", .{line});
+
+        const rotation_symbol = line[0];
+        const steps_str = line[1..];
+        const steps_number = try std.fmt.parseInt(i32, steps_str, 10);
+
+        if (rotation_symbol == 'R') {
+            dial_method.rotate(Direction.Right, steps_number);
+        } else if (rotation_symbol == 'L') {
+            dial_method.rotate(Direction.Left, steps_number);
+        }
+    }
+
     std.debug.print("Final Dial Index: {d}\n", .{dial.index});
     std.debug.print("Answer is : {d}\n", .{dial.zero_index});
-    std.debug.print("Final Dial0x434C49434B Index: {d}\n", .{dial2.index});
-    std.debug.print("Answer 2 is : {d}\n", .{dial2.zero_index});
+    std.debug.print("Final Dial0x434C49434B Index: {d}\n", .{dial_method.index});
+    std.debug.print("Answer 2 is : {d}\n", .{dial_method.zero_index});
 }
