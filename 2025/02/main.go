@@ -8,8 +8,18 @@ import (
 )
 
 func main() {
-	analyser := SequenceAnalyser{}
-	scanner, closer := Scan("input.txt")
+	sequences := getSequences("input.txt")
+	sequences2 := getSequences("input2.txt")
+
+	res1 := AnalyseSimple(sequences)
+	res2 := AnalyseComplex(sequences2)
+
+	fmt.Printf("Task 1 - Sum of invalid IDs: %d\n", res1)
+	fmt.Printf("Task 2 - Sum of invalid IDs (complex analysis): %d\n", res2)
+}
+
+func getSequences(inputFile string) []Sequence {
+	scanner, closer := Scan(inputFile)
 	defer closer.Close()
 
 	scanner.Scan()
@@ -17,22 +27,7 @@ func main() {
 
 	ranges := strings.Split(line, ",")
 	sequences := ParseSequences(ranges)
-
-	res := analyser.Analyse(sequences)
-
-	// task 2
-	scanner2, closer2 := Scan("input.txt")
-	defer closer2.Close()
-
-	scanner2.Scan()
-	line2 := scanner2.Text()
-	ranges2 := strings.Split(line2, ",")
-	sequences2 := ParseSequences(ranges2)
-
-	res2 := AnalyseComplex(sequences2)
-
-	fmt.Printf("Task 1 - Sum of invalid IDs: %d\n", res.sum)
-	fmt.Printf("Task 2 - Sum of invalid IDs (complex analysis): %d\n", res2.sum)
+	return sequences
 }
 
 func ParseSequences(ranges []string) []Sequence {

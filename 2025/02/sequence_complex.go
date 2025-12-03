@@ -1,8 +1,6 @@
 package main
 
-import (
-	"slices"
-)
+import "slices"
 
 type Set struct {
 	numbers []int
@@ -15,12 +13,6 @@ func (s *Set) addNumber(n int) {
 }
 
 func AnalyseSingleComplex(sequence *Sequence) []int {
-	// split into to, three, four, until half of length of the number
-	// Check if the number can be split into 3, 4, 5 equal parts
-	// if all splits are equally big
-
-	// Hvis all parts er ens, så er det et invalid  ID
-
 	invalidIds := Set{numbers: make([]int, 0)}
 
 	numbers := EnummerateSequence(sequence)
@@ -43,17 +35,13 @@ func AnalyseSingleComplex(sequence *Sequence) []int {
 			}
 
 			if allSame {
-				// so har vi et invalid ID. Tilføj, og skip resten af patterns
 				invalidIds.addNumber(number)
-				continue
+				break
 			}
-
 		}
-
 	}
 
 	return invalidIds.numbers
-
 }
 
 func SplitStringIntoParsts(s string, size int) []string {
@@ -65,10 +53,8 @@ func SplitStringIntoParsts(s string, size int) []string {
 		end := start + substringSize
 		part := s[start:end]
 		parts = append(parts, part)
-
 	}
 	return parts
-
 }
 
 func SplitSizes(number string) []int {
@@ -82,12 +68,11 @@ func SplitSizes(number string) []int {
 	return sizes
 }
 
-func AnalyseComplex(sequence []Sequence) SequenceAnalyzerResult {
+func AnalyseComplex(sequences []Sequence) int {
 	allInvalidIds := make([]int, 0)
-	for _, seq := range sequence {
+	for _, seq := range sequences {
 		ids := AnalyseSingleComplex(&seq)
 		allInvalidIds = append(allInvalidIds, ids...)
 	}
-	total := SumInvalidIds(allInvalidIds)
-	return SequenceAnalyzerResult{sum: total, invalidIds: allInvalidIds}
+	return SumInvalidIds(allInvalidIds)
 }

@@ -5,17 +5,17 @@ import (
 	"testing"
 )
 
-//11-22 still has two invalid IDs, 11 and 22.
-//95-115 now has two invalid IDs, 99 and 111.
-//998-1012 now has two invalid IDs, 999 and 1010.
-//1188511880-1188511890 still has one invalid ID, 1188511885.
-//222220-222224 still has one invalid ID, 222222.
-//1698522-1698528 still contains no invalid IDs.
-//446443-446449 still has one invalid ID, 446446.
-//38593856-38593862 still has one invalid ID, 38593859.
-//565653-565659 now has one invalid ID, 565656.
-//824824821-824824827 now has one invalid ID, 824824824.
-//2121212118-2121212124 now has one invalid ID, 2121212121.
+// 11-22 has two invalid IDs: 11 and 22.
+// 95-115 now has two invalid IDs: 99 and 111.
+// 998-1012 now has two invalid IDs: 999 and 1010.
+// 1188511880-1188511890 has one invalid ID: 1188511885.
+// 222220-222224 has one invalid ID: 222222.
+// 1698522-1698528 contains no invalid IDs.
+// 446443-446449 has one invalid ID: 446446.
+// 38593856-38593862 has one invalid ID: 38593859.
+// 565653-565659 now has one invalid ID: 565656.
+// 824824821-824824827 now has one invalid ID: 824824824.
+// 2121212118-2121212124 now has one invalid ID: 2121212121.
 
 func TestAnalyseComplex(t *testing.T) {
 	testCases := []struct {
@@ -37,7 +37,6 @@ func TestAnalyseComplex(t *testing.T) {
 
 	total := 0
 	for _, tc := range testCases {
-
 		result := AnalyseSingleComplex(&tc.sequence)
 		for _, n := range result {
 			total += n
@@ -73,7 +72,6 @@ func TestSplitIntoParts(t *testing.T) {
 	}{
 		{number: "12", size: 2, expectedSplitSizes: []string{"1", "2"}},
 		{number: "123", size: 3, expectedSplitSizes: []string{"1", "2", "3"}},
-		{number: "112233", size: 3, expectedSplitSizes: []string{"11", "22", "33"}},
 		{number: "112233", size: 3, expectedSplitSizes: []string{"11", "22", "33"}},
 	}
 

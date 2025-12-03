@@ -1,37 +1,22 @@
 package main
 
-type SequenceAnalyser struct {
-}
+import "strconv"
 
-func (sa *SequenceAnalyser) AnalyseSingle(sequence *Sequence) []int {
-	return analyseInvalidIds(sequence)
+func AnalyseSimple(sequences []Sequence) int {
+	sum := 0
+	for _, seq := range sequences {
+		for num := seq.start; num <= seq.end; num++ {
+			s := strconv.Itoa(num)
+			length := len(s)
 
-}
-
-func (sa *SequenceAnalyser) Analyse(sequence []Sequence) SequenceAnalyzerResult {
-	allInvalidIds := make([]int, 0)
-	for _, seq := range sequence {
-		ids := analyseInvalidIds(&seq)
-		allInvalidIds = append(allInvalidIds, ids...)
-	}
-	total := SumInvalidIds(allInvalidIds)
-	return SequenceAnalyzerResult{sum: total, invalidIds: allInvalidIds}
-}
-
-func analyseInvalidIds(sequence *Sequence) []int {
-	numbers := EnummerateSequence(sequence)
-	invalidIds := make([]int, 0)
-	for _, number := range numbers {
-		numberAsString := NumberToString(number)
-		firstHalf, secondHalf := SplitInHalves(numberAsString)
-		if firstHalf == secondHalf {
-			invalidIds = append(invalidIds, number)
+			// Only even-length numbers can split into equal halves
+			if length%2 == 0 {
+				mid := length / 2
+				if s[:mid] == s[mid:] {
+					sum += num
+				}
+			}
 		}
 	}
-	return invalidIds
-}
-
-func SplitInHalves(numberAsString string) (string, string) {
-	mid := len(numberAsString) / 2
-	return numberAsString[:mid], numberAsString[mid:]
+	return sum
 }
