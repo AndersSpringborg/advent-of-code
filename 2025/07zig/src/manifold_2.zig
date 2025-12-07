@@ -28,7 +28,6 @@ pub const Manifold = struct {
     }
 
     pub fn getTimelines(self: *Manifold) isize {
-        self.printInput();
         if (self.line_length == 0) {
             return 1;
         }
@@ -40,13 +39,9 @@ pub const Manifold = struct {
     fn depth_firstSearch(self: *Manifold, x: i32, y: i32, max_depth: i32) isize {
         const linewith_usize: usize = @intCast(self.line_length);
         const y_usize: usize = @intCast(y);  // Cast y to usize
-        print("DFS at (x: {d}, y: {d})\n", .{x, y});
-
-        print("y: {d}, max_depth: {d}  y==(max_depth - 1): {any}\n", .{y, max_depth, y == (max_depth - 1)});
 
         // Base case: if we've reached the maximum depth, return 1 timeline found
         if (y == (max_depth - 1)) {
-            print("Reached max depth at (x: {d}, y: {d}), returning 1\n", .{x, y});
             return 1;
         }
         // If x is -1, we need to find the starting position 'S' in this row
@@ -132,7 +127,7 @@ test "Manifold get splits" {
     const allocator = std.testing.allocator;
 
     var manifold = try Manifold.init(allocator);
-    errdefer manifold.deinit(allocator);
+    defer manifold.deinit(allocator);
 
     try manifold.parseLine(allocator, ".......S.......");
     try manifold.parseLine(allocator, "...............");
@@ -166,4 +161,3 @@ test "Manifold initialization" {
 
     try std.testing.expectEqual(1, manifold.getTimelines());
 }
-
