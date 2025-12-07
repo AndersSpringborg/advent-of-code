@@ -13,6 +13,7 @@ pub const Scanner = struct {
         return self.current_line orelse "";
     }
 };
+
 pub const ScanResult = struct {
     scanner: Scanner,
     content: []u8,
