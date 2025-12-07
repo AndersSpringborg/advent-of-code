@@ -1,0 +1,21 @@
+# Benchmark results
+benchmark-results/
+
+# Compiled binaries
+*/advent_*
+*/[0-9][0-9]
+*zig/zig-out/
+*.exe
+
+# Zig cache
+.zig-cache/
+*zig/.zig-cache/
+
+# Go
+*.sum
+go.work
+
+# IDE
+.idea/
+.vscode/
+.DS_Store
