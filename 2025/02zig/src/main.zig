@@ -8,19 +8,18 @@ const print = std.debug.print;
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
-    const allocator = gpa.allocator();
 
-    const sequences = try getSequences(allocator, "input.txt");
-    defer allocator.free(sequences);
+    //const sequences = try getSequences(allocator, "input.txt");
+    //defer allocator.free(sequences);
 
-    const sequences2 = try getSequences(allocator, "input2.txt");
-    defer allocator.free(sequences2);
+    //const sequences2 = try getSequences(allocator, "input2.txt");
+    //defer allocator.free(sequences2);
 
-    const res1 = try sequence_analyser.analyseSimple(allocator, sequences);
-    const res2 = try sequence_complex.analyseComplex(allocator, sequences2);
+    //const res1 = try sequence_analyser.analyseSimple(allocator, sequences);
+    //const res2 = try sequence_complex.analyseSingleComplex(allocator, sequences2);
 
-    print("Task 1 - Sum of invalid IDs: {d}\n", .{res1});
-    print("Task 2 - Sum of invalid IDs (complex analysis): {d}\n", .{res2});
+    //print("Task 1 - Sum of invalid IDs: {d}\n", .{res1});
+    //print("Task 2 - Sum of invalid IDs (complex analysis): {d}\n", .{res2});
 }
 
 fn getSequences(allocator: std.mem.Allocator, input_file: []const u8) ![]common.Sequence {
