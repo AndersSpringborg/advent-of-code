@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="advent_03 test" type="GoTestRunConfiguration" factoryName="Go Test">
+    <module name="advent-of-code" />
+    <working_directory value="$PROJECT_DIR$/2025/03" />
+    <kind value="PACKAGE" />
+    <package value="advent_03/internal" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="..." />
+    <framework value="gotest" />
+    <method v="2" />
+  </configuration>
+</component>

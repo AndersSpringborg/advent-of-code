@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="advent 03_main" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="advent-of-code" />
+    <working_directory value="$PROJECT_DIR$/2025/03" />
+    <kind value="PACKAGE" />
+    <package value="advent_03/cmd/03" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/2025/03/cmd/03/main.go" />
+    <method v="2" />
+  </configuration>
+</component>

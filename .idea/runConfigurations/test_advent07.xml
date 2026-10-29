@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="test advent07" type="ZIGBRAINS_TEST" factoryName="ZIGBRAINS_TEST">
+    <ZigBrainsOption name="workingDirectory" value="$PROJECT_DIR$" />
+    <envs />
+    <ZigBrainsOption name="filePath" value="$PROJECT_DIR$/2025/07zig/src/root.zig" />
+    <ZigBrainsNestedOption name="optimization">
+      <ZigBrainsOption name="level" value="Debug" />
+      <ZigBrainsOption name="forced" value="false" />
+    </ZigBrainsNestedOption>
+    <ZigBrainsOption name="compilerArgs" value="" />
+    <method v="2" />
+  </configuration>
+</component>
